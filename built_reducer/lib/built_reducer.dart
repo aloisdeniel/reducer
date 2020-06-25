@@ -137,6 +137,9 @@ class ReducerBaseActionGenerator {
       ..name = baseActionName(reducerClass.name)
       ..abstract = true;
 
+    final constructor = ConstructorBuilder()..constant = true;
+    builder.constructors.add(constructor.build());
+
     return builder.build();
   }
 }
@@ -167,6 +170,7 @@ class ReducerActionGenerator {
     ));
 
     final constructor = ConstructorBuilder()
+      ..constant = true
       ..optionalParameters.addAll(
         parameters.map(
           (x) => Parameter(

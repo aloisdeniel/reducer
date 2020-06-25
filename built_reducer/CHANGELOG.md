@@ -1,3 +1,7 @@
+## 0.5.2
+
+- Added const constructors to actions.
+
 ## 0.5.1
 
 - Updated doc

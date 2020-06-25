@@ -31,14 +31,16 @@ mixin _CounterReducer {
   }
 }
 
-abstract class CounterAction {}
+abstract class CounterAction {
+  const CounterAction();
+}
 
 class CounterAddAction extends CounterAction {
-  CounterAddAction({@required this.value});
+  const CounterAddAction({@required this.value});
 
   final int value;
 }
 
 class CounterResetAction extends CounterAction {
-  CounterResetAction();
+  const CounterResetAction();
 }
