@@ -1,0 +1,20 @@
+# Read about `build.yaml` at https://pub.dev/packages/build_config
+targets:
+  $default:
+    builders:
+      built_reducer|built_reducer:
+        enabled: true
+        generate_for:
+          exclude:
+            - test
+            - example
+
+builders:
+  built_reducer:
+    target: ":built_reducer"
+    import: "package:built_reducer/builder.dart"
+    builder_factories: ["built_reducer"]
+    build_extensions: {".dart": [".reducer.g.part"]}
+    auto_apply: dependents
+    build_to: cache
+    applies_builders: ["source_gen|combining_builder"]

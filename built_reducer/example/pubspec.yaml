@@ -1,0 +1,11 @@
+name: example
+
+dependencies:
+  meta:
+  reducer: 
+    path: ../../reducer
+
+dev_dependencies:
+  build_runner:
+  built_reducer: 
+    path: ../ 
