@@ -53,6 +53,25 @@ From there, to run the code generator, you have two possibilities:
 - `flutter pub run build_runner build`, if your package depends on Flutter
 - `pub run build_runner build` otherwise
 
+Then use the reducer from the actions :
+
+```dart
+var state = CounterState(0);
+const reducer = CounterReducer();
+state = reducer(state, const CounterAddAction(value: 5));
+state = reducer(state, const CounterResetAction());
+```
+
 ## Resulting file
 
 You have a result in the [example folder](example/lib/counter.g.dart).
+
+## Why using a reducer instead of methods directly.
+
+Since each call is represented with an instance, you have more possibilities :
+
+* Reproducing a sequence of calls.
+* Adding middlewares
+* Serializing calls
+* Redux
+
