@@ -1,3 +1,4 @@
+import 'package:meta/meta.dart';
 import 'package:reducer/reducer.dart';
 
 void main() {
@@ -7,6 +8,7 @@ void main() {
   state = reducer(state, const CounterResetAction());
 }
 
+@immutable
 class CounterState {
   final int count;
   const CounterState(this.count);
@@ -15,11 +17,11 @@ class CounterState {
 class CounterReducer extends Reducer<CounterState, CounterAction>
     with _CounterReducer {
   const CounterReducer();
-  static CounterState add(CounterState previousState, {int value}) {
+  CounterState add(CounterState previousState, {int value}) {
     return CounterState(previousState.count + value);
   }
 
-  static CounterState reset(CounterState previousState) {
+  CounterState reset(CounterState previousState) {
     return CounterState(0);
   }
 }
@@ -28,14 +30,15 @@ class CounterReducer extends Reducer<CounterState, CounterAction>
 
 mixin _CounterReducer {
   CounterState call(CounterState previousState, CounterAction action) {
+    final reducer = this as CounterReducer;
     if (action is CounterAddAction) {
-      return CounterReducer.add(
+      return reducer.add(
         previousState,
         value: action.value,
       );
     }
     if (action is CounterResetAction) {
-      return CounterReducer.reset(
+      return reducer.reset(
         previousState,
       );
     }
@@ -43,7 +46,8 @@ mixin _CounterReducer {
     return previousState;
   }
 
-  bool operator [](Type actionType) {
+  bool operator [](Object action) {
+    final actionType = action is Type ? action : action.runtimeType;
     return const [
       CounterAddAction,
       CounterResetAction,

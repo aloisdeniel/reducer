@@ -29,6 +29,7 @@ import 'package:reducer/reducer.dart';
 
 part 'counter.g.dart';
 
+@immutable
 class CounterState {
   final int count;
   const CounterState(this.count);
@@ -38,17 +39,17 @@ class CounterReducer extends Reducer<CounterState, CounterAction>
     with _CounterReducer {
   const CounterReducer();
 
-  static CounterState add(CounterState previousState, {@required int value}) {
+  CounterState add(CounterState previousState, {@required int value}) {
     return CounterState(previousState.count + value);
   }
 
-  static CounterState reset(CounterState previousState) {
+  CounterState reset(CounterState previousState) {
     return CounterState(0);
   }
 }
 ```
 
-From there, to run the code generator, you have two possibilities:
+From there, to generate the missing `<Name>Action`, `_<Name>Reducer` and the action classes, you have two possibilities:
 
 - `flutter pub run build_runner build`, if your package depends on Flutter
 - `pub run build_runner build` otherwise

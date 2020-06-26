@@ -10,7 +10,9 @@ abstract class Reducer<TState, TAction> {
   /// the [action].
   TState call(TState previousState, TAction action);
 
-  /// Indicates whether this reducer can process this
-  /// kind of action.
-  bool operator [](Type actionType);
+  /// Indicates whether this reducer may process this
+  /// kind of [action].
+  ///
+  /// The [action] may be an instance or the action [Type].
+  bool operator [](Object action);
 }

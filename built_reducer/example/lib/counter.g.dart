@@ -8,14 +8,15 @@ part of 'counter.dart';
 
 mixin _CounterReducer {
   CounterState call(CounterState previousState, CounterAction action) {
+    final reducer = this as CounterReducer;
     if (action is CounterAddAction) {
-      return CounterReducer.add(
+      return reducer.add(
         previousState,
         value: action.value,
       );
     }
     if (action is CounterResetAction) {
-      return CounterReducer.reset(
+      return reducer.reset(
         previousState,
       );
     }
@@ -23,7 +24,8 @@ mixin _CounterReducer {
     return previousState;
   }
 
-  bool operator [](Type actionType) {
+  bool operator [](Object action) {
+    final actionType = action is Type ? action : action.runtimeType;
     return const [
       CounterAddAction,
       CounterResetAction,

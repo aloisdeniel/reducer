@@ -1,3 +1,7 @@
+## 0.6.0
+
+- Reducer methods aren't static anymore.
+
 ## 0.5.2
 
 - Added const constructors to actions.

@@ -78,7 +78,6 @@ class ReducerMixinGenerator {
   List<MethodElement> get actionMethods {
     final typeChecker = TypeChecker.fromStatic(stateClass);
     return reducerClass.methods
-        .where((x) => x.isStatic)
         .where(
           (x) =>
               x.parameters.isNotEmpty &&
@@ -104,7 +103,7 @@ class ReducerMixinGenerator {
           .join();
       return '''
       if(action is $name) {
-        return ${reducerClass.name}.${x.name}(previousState, $parameters);
+        return reducer.${x.name}(previousState, $parameters);
       }
       ''';
     }).join();
@@ -112,11 +111,13 @@ class ReducerMixinGenerator {
     return '''
   mixin $typeName {
     ${stateClass.getDisplayString()} call(${stateClass.getDisplayString()} previousState, $baseAction action) {
+      final reducer = this as ${reducerClass.name};
       $actionCases
       return previousState;
     }
 
-    bool operator [](Type actionType) {
+    bool operator [](Object action) {
+      final actionType = action is Type ? action : action.runtimeType;
       return const [
         ${actionNames}
       ].contains(actionType);

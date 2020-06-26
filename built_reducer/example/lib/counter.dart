@@ -3,6 +3,7 @@ import 'package:reducer/reducer.dart';
 
 part 'counter.g.dart';
 
+@immutable
 class CounterState {
   final int count;
   const CounterState(this.count);
@@ -12,11 +13,11 @@ class CounterReducer extends Reducer<CounterState, CounterAction>
     with _CounterReducer {
   const CounterReducer();
 
-  static CounterState add(CounterState previousState, {@required int value}) {
+  CounterState add(CounterState previousState, {@required int value}) {
     return CounterState(previousState.count + value);
   }
 
-  static CounterState reset(CounterState previousState) {
+  CounterState reset(CounterState previousState) {
     return CounterState(0);
   }
 }
